@@ -36,7 +36,7 @@
       background: transparent;
     }
 
-    /* Fullscreen wallpaper layer (fixes mobile white bar) */
+    /* Wallpaper layer */
     body::before{
       content: "";
       position: fixed;
@@ -62,6 +62,7 @@
       display: grid;
       place-items: center;
       padding: 40px 20px;
+      position: relative; /* anchor for floating icon */
     }
 
     .panel{
@@ -134,80 +135,83 @@
       letter-spacing: 0.2px;
     }
 
+    /* Floating bottom-right PNG icon */
+    .corner-icon{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translate(40%, 40%); /* half outside effect */
+      width: 120px; /* adjust size here */
+      height: auto;
+      z-index: 10;
+      pointer-events: none; /* click-through */
+      opacity: 0.95;
+    }
+
+    @media (max-width: 600px){
+      .corner-icon{
+        width: 90px;
+        transform: translate(35%, 35%);
+      }
+    }
+
   </style>
 </head>
 
 <body>
   <div class="wrap">
+
+    <!-- Floating PNG -->
+    <img src="icon.png" class="corner-icon" alt="">
+
     <main class="panel">
       <section class="grid">
 
         <!-- Row 1 -->
-
-        <a class="tile" href="https://chatgpt.com/" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com">
-          </div>
+        <a class="tile" href="https://chatgpt.com/" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com"></div>
           <p class="name">ChatGPT</p>
         </a>
 
-        <a class="tile" href="https://toolkit.artlist.io/" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=artlist.io">
-          </div>
+        <a class="tile" href="https://toolkit.artlist.io/" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=artlist.io"></div>
           <p class="name">Artlist Toolkit</p>
         </a>
 
-        <a class="tile" href="https://github.com/" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=github.com">
-          </div>
+        <a class="tile" href="https://github.com/" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=github.com"></div>
           <p class="name">GitHub</p>
         </a>
 
         <!-- Row 2 -->
-
-        <a class="tile" href="https://admin.microsoft.com/" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=admin.microsoft.com">
-          </div>
+        <a class="tile" href="https://admin.microsoft.com/" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=admin.microsoft.com"></div>
           <p class="name">M365 Admin</p>
         </a>
 
-        <a class="tile" href="https://admin.exchange.microsoft.com/#/mailboxes" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=admin.exchange.microsoft.com">
-          </div>
+        <a class="tile" href="https://admin.exchange.microsoft.com/#/mailboxes" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=admin.exchange.microsoft.com"></div>
           <p class="name">Exchange</p>
         </a>
 
-        <a class="tile" href="https://intune.microsoft.com/#home" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=intune.microsoft.com">
-          </div>
+        <a class="tile" href="https://intune.microsoft.com/#home" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=intune.microsoft.com"></div>
           <p class="name">Intune</p>
         </a>
 
         <!-- Row 3 -->
-
-        <a class="tile" href="https://lookup.icann.org/" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=lookup.icann.org">
-          </div>
+        <a class="tile" href="https://lookup.icann.org/" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=lookup.icann.org"></div>
           <p class="name">ICANN Lookup</p>
         </a>
 
-        <a class="tile" href="https://passwordsgenerator.net/" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=passwordsgenerator.net">
-          </div>
+        <a class="tile" href="https://passwordsgenerator.net/" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=passwordsgenerator.net"></div>
           <p class="name">Password Generator</p>
         </a>
 
-        <a class="tile" href="https://app.plex.tv/" target="_blank" rel="noopener">
-          <div class="icon">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=plex.tv">
-          </div>
+        <a class="tile" href="https://app.plex.tv/" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=plex.tv"></div>
           <p class="name">Plex</p>
         </a>
 
