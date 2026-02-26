@@ -16,12 +16,20 @@
     }
 
     *{ box-sizing: border-box; }
-    html, body{ height: 100%; }
+
+    html, body{
+      height: 100%;
+      margin: 0;
+    }
 
     body{
-      margin: 0;
+      min-height: 100vh;      /* fallback */
+      min-height: 100dvh;     /* fixes mobile viewport gaps */
+      overflow-x: hidden;
+
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
+      background-color: #000;
 
       background-image:
         radial-gradient(circle at 20% 70%, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.75) 100%),
@@ -29,11 +37,19 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-attachment: scroll; /* mobile safe */
+    }
+
+    /* Keep parallax effect on desktop only */
+    @media (min-width: 900px) {
+      body {
+        background-attachment: fixed;
+      }
     }
 
     .wrap{
-      min-height: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
       display: grid;
       place-items: center;
       padding: 40px 20px;
@@ -131,7 +147,7 @@
           <p class="name">Artlist Toolkit</p>
         </a>
 
-	<a class="tile" href="https://github.com/" target="_blank">
+        <a class="tile" href="https://github.com/" target="_blank">
           <div class="icon">
             <img src="https://www.google.com/s2/favicons?sz=64&domain=github.com">
           </div>
