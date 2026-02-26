@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+
+  <style>
+    :root{
+      --tile-bg: rgba(10, 14, 20, 0.55);
+      --tile-border: rgba(255, 255, 255, 0.12);
+      --tile-hover: rgba(10, 14, 20, 0.75);
+      --text: rgba(255, 255, 255, 0.92);
+      --shadow: 0 20px 60px rgba(0,0,0,0.45);
+      --radius: 18px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+
+      background-image:
+        radial-gradient(circle at 20% 70%, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.75) 100%),
+        url("VNDRK_Macbook.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .wrap{
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 40px 20px;
+    }
+
+    .panel{
+      width: min(1100px, 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: calc(var(--radius) + 8px);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      background: rgba(0,0,0,0.20);
+    }
+
+    .grid{
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 560px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .tile{
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      align-items: center;
+      gap: 16px;
+
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--tile-border);
+      background: var(--tile-bg);
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+    }
+
+    .tile:hover{
+      transform: translateY(-3px);
+      background: var(--tile-hover);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .icon{
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .icon img{
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));
+    }
+
+    .name{
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <main class="panel">
+      <section class="grid">
+
+        <a class="tile" href="https://chatgpt.com/" target="_blank">
+          <div class="icon">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com">
+          </div>
+          <p class="name">ChatGPT</p>
+        </a>
+
+        <a class="tile" href="https://toolkit.artlist.io/" target="_blank">
+          <div class="icon">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=artlist.io">
+          </div>
+          <p class="name">Artlist Toolkit</p>
+        </a>
+
+	<a class="tile" href="https://github.com/" target="_blank">
+          <div class="icon">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=github.com">
+          </div>
+          <p class="name">GitHub</p>
+        </a>
+
+        <a class="tile" href="https://admin.microsoft.com/" target="_blank">
+          <div class="icon">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=admin.microsoft.com">
+          </div>
+          <p class="name">M365 Admin</p>
+        </a>
+
+        <a class="tile" href="https://admin.exchange.microsoft.com/#/mailboxes" target="_blank">
+          <div class="icon">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=admin.exchange.microsoft.com">
+          </div>
+          <p class="name">Exchange</p>
+        </a>
+
+        <a class="tile" href="https://intune.microsoft.com/#home" target="_blank">
+          <div class="icon">
+            <img src="https://www.google.com/s2/favicons?sz=64&domain=intune.microsoft.com">
+          </div>
+          <p class="name">Intune</p>
+        </a>
+
+      </section>
+    </main>
+  </div>
+</body>
+</html>
