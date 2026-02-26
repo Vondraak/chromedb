@@ -12,7 +12,7 @@
       --tile-hover: rgba(10, 14, 20, 0.75);
       --text: rgba(255, 255, 255, 0.92);
       --shadow: 0 20px 60px rgba(0,0,0,0.45);
-      --radius: 18px;
+      --radius: 7px;
     }
 
     *{ box-sizing: border-box; }
@@ -36,7 +36,6 @@
       background: transparent;
     }
 
-    /* Wallpaper layer */
     body::before{
       content: "";
       position: fixed;
@@ -50,9 +49,6 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-
-      transform: translateZ(0);
-      will-change: transform;
     }
 
     .wrap{
@@ -62,7 +58,6 @@
       display: grid;
       place-items: center;
       padding: 40px 20px;
-      position: relative; /* anchor for floating icon */
     }
 
     .panel{
@@ -70,15 +65,16 @@
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: calc(var(--radius) + 8px);
+      border-radius: var(--radius);
       padding: 28px;
       box-shadow: var(--shadow);
       background: rgba(0,0,0,0.20);
+      position: relative;
     }
 
     .grid{
       display: grid;
-      gap: 18px;
+      gap: 9px; /* half spacing */
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
@@ -95,7 +91,6 @@
       grid-template-columns: 60px 1fr;
       align-items: center;
       gap: 16px;
-
       padding: 20px;
       border-radius: var(--radius);
       border: 1px solid var(--tile-border);
@@ -106,7 +101,7 @@
     }
 
     .tile:hover{
-      transform: translateY(-3px);
+      transform: translateY(-5px);
       background: var(--tile-hover);
       border-color: rgba(255,255,255,0.22);
     }
@@ -114,7 +109,7 @@
     .icon{
       width: 60px;
       height: 60px;
-      border-radius: 14px;
+      border-radius: var(--radius);
       display: grid;
       place-items: center;
       background: rgba(255,255,255,0.08);
@@ -125,7 +120,7 @@
       width: 36px;
       height: 36px;
       object-fit: contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));
+      filter: none; /* removed shadow */
     }
 
     .name{
@@ -135,23 +130,23 @@
       letter-spacing: 0.2px;
     }
 
-    /* Floating bottom-right PNG icon */
-    .corner-icon{
+    /* CENTER TOP ICON */
+    .panel-corner-icon{
       position: absolute;
-      right: 0;
-      bottom: 0;
-      transform: translate(40%, 40%); /* half outside effect */
-      width: 120px; /* adjust size here */
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -50%);
+      width: 220px;
       height: auto;
-      z-index: 10;
-      pointer-events: none; /* click-through */
-      opacity: 0.95;
+      z-index: 5;
+      pointer-events: none;
+
+      
     }
 
     @media (max-width: 600px){
-      .corner-icon{
-        width: 90px;
-        transform: translate(35%, 35%);
+      .panel-corner-icon{
+        width: 160px;
       }
     }
 
@@ -160,14 +155,12 @@
 
 <body>
   <div class="wrap">
-
-    <!-- Floating PNG -->
-    <img src="icon.png" class="corner-icon" alt="">
-
     <main class="panel">
+
+      <img src="icon.png" class="panel-corner-icon" alt="">
+
       <section class="grid">
 
-        <!-- Row 1 -->
         <a class="tile" href="https://chatgpt.com/" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com"></div>
           <p class="name">ChatGPT</p>
@@ -183,7 +176,6 @@
           <p class="name">GitHub</p>
         </a>
 
-        <!-- Row 2 -->
         <a class="tile" href="https://admin.microsoft.com/" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=admin.microsoft.com"></div>
           <p class="name">M365 Admin</p>
@@ -199,7 +191,6 @@
           <p class="name">Intune</p>
         </a>
 
-        <!-- Row 3 -->
         <a class="tile" href="https://lookup.icann.org/" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=lookup.icann.org"></div>
           <p class="name">ICANN Lookup</p>
