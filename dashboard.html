@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0a0c0d" />
   <title>Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300&family=Jost:wght@200;300&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg: #0a0c0d;
@@ -75,7 +78,7 @@
       border: 1px solid var(--panel-border);
       border-top: 1px solid var(--gold-dim);
       border-radius: var(--radius);
-      padding: 56px 32px 32px;
+      padding: 32px;
       box-shadow: 0 30px 80px rgba(0,0,0,0.55);
       background: var(--panel-bg);
       position: relative;
@@ -200,21 +203,40 @@
       text-transform: uppercase;
       color: var(--muted);
     }
-    .panel-corner-icon{
+    /* wordmark sits above the panel — nothing cut away */
+    .wordmark{
       position: absolute;
       left: 50%;
-      top: 0;
-      transform: translate(-50%, -50%);
-      width: 200px;
-      height: auto;
+      bottom: 100%;
+      transform: translateX(-50%);
+      margin-bottom: 18px;
       z-index: 5;
       pointer-events: none;
-      /* shift the blue wordmark to gold */
-      filter: hue-rotate(190deg) saturate(1.5) brightness(1.05);
+      white-space: nowrap;
+      font-family: "Josefin Sans", "Jost", ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif;
+      font-size: 40px;
+      font-weight: 200;
+      letter-spacing: 0.46em;
+      text-indent: 0.46em; /* balances the trailing tracking */
+      line-height: 1;
+      background: linear-gradient(180deg, #f6e9be 0%, #d4ae35 50%, #a4801c 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 1px 12px rgba(201,162,39,0.22));
+    }
+    .wordmark::after{
+      content: "";
+      display: block;
+      height: 1px;
+      margin: 12px auto 0;
+      width: 74%;
+      background: linear-gradient(90deg, rgba(201,162,39,0), rgba(201,162,39,0.85), rgba(201,162,39,0));
+      opacity: 0.55;
     }
     @media (max-width: 600px){
-      .panel-corner-icon{ width: 150px; }
-      .panel{ padding: 46px 20px 24px; }
+      .wordmark{ font-size: 27px; letter-spacing: 0.34em; text-indent: 0.34em; margin-bottom: 14px; }
+      .panel{ padding: 24px 20px; }
       .panel-title{ font-size: 22px; }
     }
   </style>
@@ -222,7 +244,7 @@
 <body>
   <div class="wrap">
     <main class="panel">
-      <img src="icon.png" class="panel-corner-icon" alt="">
+      <div class="wordmark">VNDRK</div>
 
       <p class="eyebrow">Console</p>
       <h1 class="panel-title">Dashboard</h1>
