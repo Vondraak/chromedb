@@ -38,7 +38,7 @@
       background-color: #000;
       background-image:
         radial-gradient(circle at 20% 70%, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.75) 100%),
-        url("VNDRK_Macbook.jpg");
+        url("WCD_Tesselated_GoldSpace_NoLogo.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -126,6 +126,8 @@
       height: auto;
       z-index: 5;
       pointer-events: none;
+      /* shift the blue wordmark to gold */
+      filter: hue-rotate(190deg) saturate(1.5) brightness(1.05);
     }
     @media (max-width: 600px){
       .panel-corner-icon{
