@@ -3,21 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0a0c0d" />
   <title>Dashboard</title>
   <style>
     :root{
-      --tile-bg: rgba(10, 14, 20, 0.55);
-      --tile-border: rgba(255, 255, 255, 0.12);
-      --tile-hover: rgba(10, 14, 20, 0.75);
-      --text: rgba(255, 255, 255, 0.92);
-      --shadow: 0 20px 60px rgba(0,0,0,0.45);
-      --radius: 7px;
+      --bg: #0a0c0d;
+      --panel-bg: rgba(255, 255, 255, 0.018);
+      --panel-border: rgba(255, 255, 255, 0.07);
+      --tile-bg: rgba(255, 255, 255, 0.028);
+      --tile-bg-hover: rgba(255, 255, 255, 0.055);
+      --tile-border: rgba(255, 255, 255, 0.08);
+      --gold: #c9a227;
+      --gold-bright: #e3bd4d;
+      --gold-dim: rgba(201, 162, 39, 0.45);
+      --text: #e9e6e1;
+      --muted: #8a8f95;
+      --radius: 4px;
     }
     *{ box-sizing: border-box; }
     html, body{
       height: 100%;
       margin: 0;
-      background: #000;
+      background: var(--bg);
       overscroll-behavior-y: none;
     }
     body{
@@ -25,23 +32,33 @@
       min-height: 100svh;
       min-height: 100dvh;
       overflow-x: hidden;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: var(--text);
       position: relative;
       background: transparent;
+      -webkit-font-smoothing: antialiased;
     }
     body::before{
       content: "";
       position: fixed;
       inset: 0;
-      z-index: -1;
-      background-color: #000;
+      z-index: -2;
+      background-color: var(--bg);
       background-image:
-        radial-gradient(circle at 20% 70%, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.75) 100%),
+        linear-gradient(180deg, rgba(10,12,13,0.88) 0%, rgba(10,12,13,0.70) 45%, rgba(10,12,13,0.94) 100%),
         url("WCD_Tesselated_GoldSpace_NoLogo.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+    }
+    /* vignette to settle the image into the site's near-black field */
+    body::after{
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 35%, rgba(10,12,13,0) 0%, rgba(10,12,13,0.55) 62%, rgba(10,12,13,0.92) 100%);
     }
     .wrap{
       min-height: 100vh;
@@ -49,22 +66,50 @@
       min-height: 100dvh;
       display: grid;
       place-items: center;
-      padding: 40px 20px;
+      padding: 72px 20px 48px;
     }
     .panel{
       width: min(1100px, 100%);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px) saturate(1.05);
+      -webkit-backdrop-filter: blur(10px) saturate(1.05);
+      border: 1px solid var(--panel-border);
+      border-top: 1px solid var(--gold-dim);
       border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: var(--shadow);
-      background: rgba(0,0,0,0.20);
+      padding: 56px 32px 32px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+      background: var(--panel-bg);
       position: relative;
+    }
+    .eyebrow{
+      margin: 0 0 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .panel-title{
+      margin: 0 0 4px;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .panel-sub{
+      margin: 0 0 28px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+    .rule{
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold-dim), rgba(255,255,255,0.06) 40%, rgba(255,255,255,0));
+      margin: 0 0 24px;
     }
     .grid{
       display: grid;
-      gap: 9px;
+      gap: 10px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     @media (max-width: 900px){
@@ -74,55 +119,93 @@
       .grid{ grid-template-columns: 1fr; }
     }
     .tile{
+      position: relative;
       display: grid;
-      grid-template-columns: 60px 1fr;
+      grid-template-columns: 52px 1fr;
       align-items: center;
       gap: 16px;
-      padding: 20px;
+      padding: 18px 18px 18px 20px;
       border-radius: var(--radius);
       border: 1px solid var(--tile-border);
       background: var(--tile-bg);
       text-decoration: none;
       color: var(--text);
-      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      overflow: hidden;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+    /* gold rule that fills in on hover */
+    .tile::before{
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--gold);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 160ms ease;
     }
     .tile:hover{
-      transform: translateY(-5px);
-      background: var(--tile-hover);
-      border-color: rgba(255,255,255,0.22);
+      transform: translateY(-3px);
+      background: var(--tile-bg-hover);
+      border-color: var(--gold-dim);
+    }
+    .tile:hover::before{ transform: scaleY(1); }
+    .tile:focus-visible{
+      outline: 1px solid var(--gold);
+      outline-offset: 2px;
     }
     .icon{
-      width: 60px;
-      height: 60px;
+      width: 52px;
+      height: 52px;
       border-radius: var(--radius);
       display: grid;
       place-items: center;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .icon img{
-      width: 36px;
-      height: 36px;
+      width: 30px;
+      height: 30px;
       object-fit: contain;
-      filter: none;
     }
     .icon svg{
-      width: 36px;
-      height: 36px;
+      width: 30px;
+      height: 30px;
       display: block;
     }
+    .label{ min-width: 0; }
     .name{
-      font-size: 20px;
+      font-size: 17px;
       font-weight: 600;
       margin: 0;
-      letter-spacing: 0.2px;
+      letter-spacing: -0.005em;
+      color: var(--text);
+    }
+    .host{
+      margin: 3px 0 0;
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tile:hover .host{ color: var(--gold); }
+    .foot{
+      margin: 26px 0 0;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
     .panel-corner-icon{
       position: absolute;
       left: 50%;
       top: 0;
       transform: translate(-50%, -50%);
-      width: 220px;
+      width: 200px;
       height: auto;
       z-index: 5;
       pointer-events: none;
@@ -130,9 +213,9 @@
       filter: hue-rotate(190deg) saturate(1.5) brightness(1.05);
     }
     @media (max-width: 600px){
-      .panel-corner-icon{
-        width: 160px;
-      }
+      .panel-corner-icon{ width: 150px; }
+      .panel{ padding: 46px 20px 24px; }
+      .panel-title{ font-size: 22px; }
     }
   </style>
 </head>
@@ -140,6 +223,12 @@
   <div class="wrap">
     <main class="panel">
       <img src="icon.png" class="panel-corner-icon" alt="">
+
+      <p class="eyebrow">Console</p>
+      <h1 class="panel-title">Dashboard</h1>
+      <p class="panel-sub">Working set — finance, fabrication, tenant administration, and infrastructure.</p>
+      <div class="rule"></div>
+
       <section class="grid">
 
         <!-- Row 1 -->
@@ -147,49 +236,71 @@
           <div class="icon">
             <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <defs>
-                <linearGradient id="cyberMoney" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#00f0ff"/>
-                  <stop offset="55%" stop-color="#7b5cff"/>
-                  <stop offset="100%" stop-color="#ff2fd0"/>
+                <linearGradient id="goldMoney" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f0d98a"/>
+                  <stop offset="50%" stop-color="#c9a227"/>
+                  <stop offset="100%" stop-color="#8a6b12"/>
                 </linearGradient>
-                <filter id="cyberGlow" x="-60%" y="-60%" width="220%" height="220%">
-                  <feGaussianBlur stdDeviation="2.2" result="b"/>
+                <filter id="goldGlow" x="-60%" y="-60%" width="220%" height="220%">
+                  <feGaussianBlur stdDeviation="1.8" result="b"/>
                   <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
               </defs>
               <g font-family="Impact, Haettenschweiler, 'Arial Black', sans-serif" font-size="52" font-weight="700" text-anchor="middle">
-                <text x="30.4" y="50" fill="#ff2fd0" opacity="0.55">$</text>
-                <text x="33.6" y="50" fill="#00f0ff" opacity="0.55">$</text>
-                <text x="32" y="50" fill="url(#cyberMoney)" filter="url(#cyberGlow)">$</text>
+                <text x="30.6" y="50" fill="#8a6b12" opacity="0.6">$</text>
+                <text x="33.4" y="50" fill="#f0d98a" opacity="0.45">$</text>
+                <text x="32" y="50" fill="url(#goldMoney)" filter="url(#goldGlow)">$</text>
               </g>
-              <rect x="6" y="25.5" width="52" height="1.6" fill="#0b0f16" opacity="0.85"/>
-              <rect x="6" y="38" width="52" height="1.2" fill="#0b0f16" opacity="0.7"/>
+              <rect x="6" y="25.5" width="52" height="1.5" fill="#0a0c0d" opacity="0.85"/>
+              <rect x="6" y="38" width="52" height="1.1" fill="#0a0c0d" opacity="0.7"/>
             </svg>
           </div>
-          <p class="name">Monthly Budget</p>
+          <div class="label">
+            <p class="name">Monthly Budget</p>
+            <p class="host">vondraak.github.io/Budget</p>
+          </div>
         </a>
+
         <a class="tile" href="https://vondraak.github.io/WTC/" target="_blank">
           <div class="icon"><img src="file_4.png" alt=""></div>
-          <p class="name">WTC Invoicing</p>
+          <div class="label">
+            <p class="name">WTC Invoicing</p>
+            <p class="host">vondraak.github.io/WTC</p>
+          </div>
         </a>
+
         <a class="tile" href="http://192.168.50.99/login" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=mainsail.xyz"
-            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2338bdf8'%3E%3Cpath d='M12 2 4 18h8V2zm2 6v10h6L14 8zM2 20h20v2H2v-2z'/%3E%3C/svg%3E&quot;"></div>
-          <p class="name">Ender3v2</p>
+            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227'%3E%3Cpath d='M12 2 4 18h8V2zm2 6v10h6L14 8zM2 20h20v2H2v-2z'/%3E%3C/svg%3E&quot;"></div>
+          <div class="label">
+            <p class="name">Ender3v2</p>
+            <p class="host">192.168.50.99</p>
+          </div>
         </a>
 
         <!-- Row 2 -->
         <a class="tile" href="https://admin.microsoft.com/" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=admin.microsoft.com"></div>
-          <p class="name">M365 Admin</p>
+          <div class="label">
+            <p class="name">M365 Admin</p>
+            <p class="host">admin.microsoft.com</p>
+          </div>
         </a>
+
         <a class="tile" href="https://admin.exchange.microsoft.com/#/mailboxes" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=admin.exchange.microsoft.com"></div>
-          <p class="name">Exchange</p>
+          <div class="label">
+            <p class="name">Exchange</p>
+            <p class="host">admin.exchange.microsoft.com</p>
+          </div>
         </a>
+
         <a class="tile" href="https://intune.microsoft.com/#home" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=intune.microsoft.com"></div>
-          <p class="name">Intune</p>
+          <div class="label">
+            <p class="name">Intune</p>
+            <p class="host">intune.microsoft.com</p>
+          </div>
         </a>
 
         <!-- Row 3 -->
@@ -197,30 +308,43 @@
           <div class="icon">
             <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <defs>
-                <linearGradient id="bubbleGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#5ea9ff"/>
-                  <stop offset="100%" stop-color="#1a73e8"/>
+                <linearGradient id="bubbleGold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#e3bd4d"/>
+                  <stop offset="100%" stop-color="#a8831a"/>
                 </linearGradient>
               </defs>
-              <path fill="url(#bubbleGrad)" d="M32 8C17.6 8 6 17.4 6 29c0 6.6 3.8 12.4 9.7 16.2-.6 4.1-2.4 7.6-5 10.2-.7.7-.2 1.9.8 1.8 6.3-.6 11.3-3 14.7-5.6 1.9.3 3.8.5 5.8.5 14.4 0 26-9.4 26-21S46.4 8 32 8z"/>
-              <circle cx="22" cy="29" r="3.1" fill="#0b0f16" opacity="0.9"/>
-              <circle cx="32" cy="29" r="3.1" fill="#0b0f16" opacity="0.9"/>
-              <circle cx="42" cy="29" r="3.1" fill="#0b0f16" opacity="0.9"/>
+              <path fill="url(#bubbleGold)" d="M32 8C17.6 8 6 17.4 6 29c0 6.6 3.8 12.4 9.7 16.2-.6 4.1-2.4 7.6-5 10.2-.7.7-.2 1.9.8 1.8 6.3-.6 11.3-3 14.7-5.6 1.9.3 3.8.5 5.8.5 14.4 0 26-9.4 26-21S46.4 8 32 8z"/>
+              <circle cx="22" cy="29" r="3.1" fill="#0a0c0d" opacity="0.92"/>
+              <circle cx="32" cy="29" r="3.1" fill="#0a0c0d" opacity="0.92"/>
+              <circle cx="42" cy="29" r="3.1" fill="#0a0c0d" opacity="0.92"/>
             </svg>
           </div>
-          <p class="name">Messages</p>
+          <div class="label">
+            <p class="name">Messages</p>
+            <p class="host">messages.google.com</p>
+          </div>
         </a>
+
         <a class="tile" href="https://github.com/" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=github.com"></div>
-          <p class="name">GitHub</p>
+          <div class="label">
+            <p class="name">GitHub</p>
+            <p class="host">github.com</p>
+          </div>
         </a>
+
         <a class="tile" href="http://192.168.50.161/Dashboard" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=unraid.net"
-            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f15a2c'%3E%3Crect x='3' y='4' width='18' height='4' rx='1'/%3E%3Crect x='3' y='10' width='18' height='4' rx='1' fill-opacity='0.75'/%3E%3Crect x='3' y='16' width='18' height='4' rx='1'/%3E%3C/svg%3E&quot;"></div>
-          <p class="name">UNRaid Server</p>
+            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227'%3E%3Crect x='3' y='4' width='18' height='4' rx='1'/%3E%3Crect x='3' y='10' width='18' height='4' rx='1' fill-opacity='0.75'/%3E%3Crect x='3' y='16' width='18' height='4' rx='1'/%3E%3C/svg%3E&quot;"></div>
+          <div class="label">
+            <p class="name">UNRaid Server</p>
+            <p class="host">192.168.50.161</p>
+          </div>
         </a>
 
       </section>
+
+      <p class="foot">Walner Consulting, LLC</p>
     </main>
   </div>
 </body>
