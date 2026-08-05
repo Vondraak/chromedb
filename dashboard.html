@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard</title>
-
   <style>
     :root{
       --tile-bg: rgba(10, 14, 20, 0.55);
@@ -14,34 +13,28 @@
       --shadow: 0 20px 60px rgba(0,0,0,0.45);
       --radius: 7px;
     }
-
     *{ box-sizing: border-box; }
-
     html, body{
       height: 100%;
       margin: 0;
       background: #000;
       overscroll-behavior-y: none;
     }
-
     body{
       min-height: 100vh;
       min-height: 100svh;
       min-height: 100dvh;
       overflow-x: hidden;
-
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       position: relative;
       background: transparent;
     }
-
     body::before{
       content: "";
       position: fixed;
       inset: 0;
       z-index: -1;
-
       background-color: #000;
       background-image:
         radial-gradient(circle at 20% 70%, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.75) 100%),
@@ -50,7 +43,6 @@
       background-position: center;
       background-repeat: no-repeat;
     }
-
     .wrap{
       min-height: 100vh;
       min-height: 100svh;
@@ -59,7 +51,6 @@
       place-items: center;
       padding: 40px 20px;
     }
-
     .panel{
       width: min(1100px, 100%);
       backdrop-filter: blur(8px);
@@ -71,21 +62,17 @@
       background: rgba(0,0,0,0.20);
       position: relative;
     }
-
     .grid{
       display: grid;
       gap: 9px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-
     @media (max-width: 900px){
       .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-
     @media (max-width: 560px){
       .grid{ grid-template-columns: 1fr; }
     }
-
     .tile{
       display: grid;
       grid-template-columns: 60px 1fr;
@@ -99,13 +86,23 @@
       color: var(--text);
       transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
     }
-
     .tile:hover{
       transform: translateY(-5px);
       background: var(--tile-hover);
       border-color: rgba(255,255,255,0.22);
     }
-
+    .tile.placeholder{
+      border-style: dashed;
+      border-color: rgba(255,255,255,0.16);
+      background: rgba(10, 14, 20, 0.28);
+      opacity: 0.55;
+      cursor: default;
+    }
+    .tile.placeholder:hover{
+      transform: none;
+      background: rgba(10, 14, 20, 0.28);
+      border-color: rgba(255,255,255,0.16);
+    }
     .icon{
       width: 60px;
       height: 60px;
@@ -115,21 +112,18 @@
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.12);
     }
-
     .icon img{
       width: 36px;
       height: 36px;
       object-fit: contain;
       filter: none;
     }
-
     .name{
       font-size: 20px;
       font-weight: 600;
       margin: 0;
       letter-spacing: 0.2px;
     }
-
     .panel-corner-icon{
       position: absolute;
       left: 50%;
@@ -140,72 +134,66 @@
       z-index: 5;
       pointer-events: none;
     }
-
     @media (max-width: 600px){
       .panel-corner-icon{
         width: 160px;
       }
     }
-
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <main class="panel">
-
       <img src="icon.png" class="panel-corner-icon" alt="">
-
       <section class="grid">
 
+        <!-- Row 1 -->
         <a class="tile" href="https://admin.microsoft.com/" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=admin.microsoft.com"></div>
           <p class="name">M365 Admin</p>
         </a>
-
         <a class="tile" href="https://admin.exchange.microsoft.com/#/mailboxes" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=admin.exchange.microsoft.com"></div>
           <p class="name">Exchange</p>
         </a>
-
         <a class="tile" href="https://intune.microsoft.com/#home" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=intune.microsoft.com"></div>
           <p class="name">Intune</p>
         </a>
-        
-        <a class="tile" href="https://blackbox.betaflight.com" target="_blank">
-          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=betaflight.com"></div>
-          <p class="name">Blackbox Betaflight</p>
+
+        <!-- Row 2 -->
+        <a class="tile" href="https://vondraak.github.io/Budget/" target="_blank">
+          <div class="icon"><img src="https://img.icons8.com/color/96/money-box.png"
+            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234ade80'%3E%3Cpath d='M4 20h16v-2H4v2zM6 16h3V8H6v8zm5 0h3V4h-3v12zm5 0h3v-6h-3v6z'/%3E%3C/svg%3E&quot;"></div>
+          <p class="name">Monthly Budget</p>
+        </a>
+        <a class="tile" href="http://192.168.50.99/login" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=mainsail.xyz"
+            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2338bdf8'%3E%3Cpath d='M12 2 4 18h8V2zm2 6v10h6L14 8zM2 20h20v2H2v-2z'/%3E%3C/svg%3E&quot;"></div>
+          <p class="name">Ender3v2</p>
+        </a>
+        <a class="tile" href="https://messages.google.com/web/conversations" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=messages.google.com"></div>
+          <p class="name">Messages</p>
         </a>
 
-        <a class="tile" href="https://am32.ca/configurator" target="_blank">
-          <div class="icon"><img src="https://am32.ca/_nuxt/am32-logo.DRT4gYVe.svg"></div>
-          <p class="name">AM32 Configurator</p>
-        </a>
-        
-        <a class="tile" href="https://esc-configurator.com/" target="_blank">
-          <div class="icon"><img src="https://esc-configurator.com/static/media/icon_128.24904331aaa8d5887f0a.png"></div>
-          <p class="name">ESC Configurator</p>
-        </a>
-
-        <a class="tile" href="https://app.betaflight.com/#" target="_blank">
-          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=betaflight.com"></div>
-          <p class="name">Betaflight</p>
-        </a>
-
-        <a class="tile" href="https://ox32.oxbot.com/" target="_blank">
-          <div class="icon"><img src="https://ox32.oxbot.com/logo.svg"></div>
-          <p class="name">OX32 Configurator</p>
-        </a>
-      
+        <!-- Row 3 -->
+        <div class="tile placeholder">
+          <div class="icon"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-opacity='0.6'%3E%3Crect x='3' y='3' width='18' height='18' rx='3' stroke-dasharray='4 3'/%3E%3Cpath d='M12 8v8M8 12h8'/%3E%3C/svg%3E"></div>
+          <p class="name">Placeholder</p>
+        </div>
         <a class="tile" href="https://github.com/" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=github.com"></div>
           <p class="name">GitHub</p>
         </a>
-        
+        <a class="tile" href="http://192.168.50.161/Dashboard" target="_blank">
+          <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=unraid.net"
+            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f15a2c'%3E%3Crect x='3' y='4' width='18' height='4' rx='1'/%3E%3Crect x='3' y='10' width='18' height='4' rx='1' fill-opacity='0.75'/%3E%3Crect x='3' y='16' width='18' height='4' rx='1'/%3E%3C/svg%3E&quot;"></div>
+          <p class="name">UNRaid Server</p>
+        </a>
+
       </section>
     </main>
   </div>
 </body>
-
 </html>
