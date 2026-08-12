@@ -5,239 +5,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0a0c0d" />
   <title>Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300&family=Jost:wght@200;300&display=swap" rel="stylesheet">
   <style>
+    /* palette lifted from walnerconsulting.com */
     :root{
-      --bg: #0a0c0d;
-      --panel-bg: rgba(255, 255, 255, 0.018);
-      --panel-border: rgba(255, 255, 255, 0.07);
-      --tile-bg: rgba(255, 255, 255, 0.028);
-      --tile-bg-hover: rgba(255, 255, 255, 0.055);
-      --tile-border: rgba(255, 255, 255, 0.08);
-      --gold: #c9a227;
-      --gold-bright: #e3bd4d;
-      --gold-dim: rgba(201, 162, 39, 0.45);
-      --text: #e9e6e1;
-      --muted: #8a8f95;
-      --radius: 4px;
+      --bg:#0b0d0e; --panel:#15181a; --panel-2:rgba(12,15,17,.62); --line:#3a4247;
+      --text:#e9edef; --muted:#8b9599; --silver:#b9c2c6;
+      --accent:#10b981; --accent-2:#34d399; --accent-dim:rgba(16,185,129,.14);
+      --danger:#c4423f;
     }
-    *{ box-sizing: border-box; }
-    html, body{
-      height: 100%;
-      margin: 0;
-      background: var(--bg);
-      overscroll-behavior-y: none;
-    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
     body{
-      min-height: 100vh;
-      min-height: 100svh;
-      min-height: 100dvh;
-      overflow-x: hidden;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      color: var(--text);
-      position: relative;
-      background: transparent;
-      -webkit-font-smoothing: antialiased;
+      color:var(--text);
+      font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+      min-height:100vh;
+      min-height:100svh;
+      min-height:100dvh;
+      background:#0a0c0d;
+      -webkit-font-smoothing:antialiased;
+      -webkit-text-size-adjust:100%;
+      overflow-x:hidden;
     }
+    /* three-directional grey → silver → black gradient */
     body::before{
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background-color: var(--bg);
-      background-image:
-        linear-gradient(180deg, rgba(10,12,13,0.88) 0%, rgba(10,12,13,0.70) 45%, rgba(10,12,13,0.94) 100%),
-        url("WCD_Tesselated_GoldSpace_NoLogo.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background:
+        radial-gradient(1300px 950px at 6% -8%,  rgba(146,157,163,.34), rgba(146,157,163,0) 60%),
+        radial-gradient(1150px 900px at 104% 24%, rgba(208,217,222,.30), rgba(208,217,222,0) 58%),
+        radial-gradient(1400px 1000px at 50% 118%, rgba(0,0,0,.85), rgba(0,0,0,0) 62%),
+        linear-gradient(205deg, #2b3134 0%, #171b1d 44%, #07090a 100%);
     }
-    /* vignette to settle the image into the site's near-black field */
-    body::after{
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: radial-gradient(ellipse at 50% 35%, rgba(10,12,13,0) 0%, rgba(10,12,13,0.55) 62%, rgba(10,12,13,0.92) 100%);
-    }
+
     .wrap{
-      min-height: 100vh;
-      min-height: 100svh;
-      min-height: 100dvh;
-      display: grid;
-      place-items: center;
-      padding: 72px 20px 48px;
+      min-height:100vh;
+      min-height:100svh;
+      min-height:100dvh;
+      display:grid;
+      place-items:center;
+      padding:96px 24px 56px;
     }
-    .panel{
-      width: min(1100px, 100%);
-      backdrop-filter: blur(10px) saturate(1.05);
-      -webkit-backdrop-filter: blur(10px) saturate(1.05);
-      border: 1px solid var(--panel-border);
-      border-top: 1px solid var(--gold-dim);
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
-      background: var(--panel-bg);
-      position: relative;
-    }
-    .eyebrow{
-      margin: 0 0 6px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .panel-title{
-      margin: 0 0 4px;
-      font-size: 26px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--text);
-    }
-    .panel-sub{
-      margin: 0 0 28px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--muted);
-      max-width: 62ch;
-    }
-    .rule{
-      height: 1px;
-      background: linear-gradient(90deg, var(--gold-dim), rgba(255,255,255,0.06) 40%, rgba(255,255,255,0));
-      margin: 0 0 24px;
-    }
-    .grid{
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    @media (max-width: 900px){
-      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 560px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-    .tile{
-      position: relative;
-      display: grid;
-      grid-template-columns: 52px 1fr;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 18px 18px 20px;
-      border-radius: var(--radius);
-      border: 1px solid var(--tile-border);
-      background: var(--tile-bg);
-      text-decoration: none;
-      color: var(--text);
-      overflow: hidden;
-      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
-    }
-    /* gold rule that fills in on hover */
-    .tile::before{
-      content: "";
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 2px;
-      background: var(--gold);
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform 160ms ease;
-    }
-    .tile:hover{
-      transform: translateY(-3px);
-      background: var(--tile-bg-hover);
-      border-color: var(--gold-dim);
-    }
-    .tile:hover::before{ transform: scaleY(1); }
-    .tile:focus-visible{
-      outline: 1px solid var(--gold);
-      outline-offset: 2px;
-    }
-    .icon{
-      width: 52px;
-      height: 52px;
-      border-radius: var(--radius);
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .icon img{
-      width: 30px;
-      height: 30px;
-      object-fit: contain;
-    }
-    .icon svg{
-      width: 30px;
-      height: 30px;
-      display: block;
-    }
-    .label{ min-width: 0; }
-    .name{
-      font-size: 17px;
-      font-weight: 600;
-      margin: 0;
-      letter-spacing: -0.005em;
-      color: var(--text);
-    }
-    .host{
-      margin: 3px 0 0;
-      font-size: 11.5px;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .tile:hover .host{ color: var(--gold); }
-    .foot{
-      margin: 26px 0 0;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+
     /* wordmark sits above the panel — nothing cut away */
     .wordmark{
-      position: absolute;
-      left: 50%;
-      bottom: 100%;
-      transform: translateX(-50%);
-      margin-bottom: 18px;
-      z-index: 5;
-      pointer-events: none;
-      white-space: nowrap;
-      font-family: "Josefin Sans", "Jost", ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif;
-      font-size: 40px;
-      font-weight: 200;
-      letter-spacing: 0.46em;
-      text-indent: 0.46em; /* balances the trailing tracking */
-      line-height: 1;
-      background: linear-gradient(180deg, #f6e9be 0%, #d4ae35 50%, #a4801c 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 1px 12px rgba(201,162,39,0.22));
+      position:absolute;
+      left:50%;
+      bottom:100%;
+      transform:translateX(-50%);
+      margin-bottom:20px;
+      z-index:5;
+      pointer-events:none;
+      white-space:nowrap;
+      font-family:inherit;
+      font-size:38px;
+      font-weight:200;
+      letter-spacing:.44em;
+      text-indent:.44em;
+      line-height:1;
+      background:linear-gradient(180deg,#eef2f4 0%,var(--silver) 55%,#7d878c 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
     }
     .wordmark::after{
-      content: "";
-      display: block;
-      height: 1px;
-      margin: 12px auto 0;
-      width: 74%;
-      background: linear-gradient(90deg, rgba(201,162,39,0), rgba(201,162,39,0.85), rgba(201,162,39,0));
-      opacity: 0.55;
+      content:"";
+      display:block;
+      height:1px;
+      margin:12px auto 0;
+      width:70%;
+      background:linear-gradient(90deg,rgba(16,185,129,0),var(--accent),rgba(16,185,129,0));
+      opacity:.6;
     }
-    @media (max-width: 600px){
-      .wordmark{ font-size: 27px; letter-spacing: 0.34em; text-indent: 0.34em; margin-bottom: 14px; }
-      .panel{ padding: 24px 20px; }
-      .panel-title{ font-size: 22px; }
+
+    /* panel — same treatment as the site's .panel */
+    .panel{
+      position:relative;
+      width:min(1000px,100%);
+      background:linear-gradient(160deg, rgba(32,37,40,.78) 0%, rgba(15,18,20,.82) 100%);
+      backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.07);
+      box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 18px 40px rgba(0,0,0,.35);
+      border-radius:12px;
+      padding:26px 22px 22px;
+    }
+
+    .sec-label{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);margin:0 0 12px;font-weight:600}
+    h1.sec{font-size:clamp(1.45rem,3.2vw,1.95rem);letter-spacing:-.02em;font-weight:620;margin:0 0 12px}
+    .sec-intro{color:var(--muted);max-width:62ch;margin:0;font-size:14.5px}
+
+    .grid{
+      display:grid;
+      gap:16px;
+      margin-top:30px;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+    @media(max-width:900px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    @media(max-width:560px){ .grid{grid-template-columns:1fr} }
+
+    /* tiles use the site's .card / .btn language */
+    .tile{
+      position:relative;
+      display:grid;
+      grid-template-columns:46px 1fr;
+      align-items:center;
+      gap:14px;
+      padding:16px 16px 16px 17px;
+      border-radius:7px;
+      border:1px solid var(--line);
+      background:var(--panel-2);
+      text-decoration:none;
+      color:var(--text);
+      overflow:hidden;
+      transition:border-color .15s, transform .15s, background .15s;
+    }
+    .tile::before{
+      content:"";
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width:2px;
+      background:var(--accent);
+      transform:scaleY(0);
+      transform-origin:top;
+      transition:transform .15s;
+    }
+    .tile:hover{
+      border-color:rgba(16,185,129,.34);
+      transform:translateY(-2px);
+      background:#232a2e;
+    }
+    .tile:hover::before{transform:scaleY(1)}
+    .tile:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+
+    .icon{
+      width:46px;height:46px;
+      border-radius:7px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+    }
+    .icon img{width:26px;height:26px;object-fit:contain}
+    .icon svg{width:26px;height:26px;display:block}
+
+    .label{min-width:0}
+    .name{font-size:1.02rem;margin:0;font-weight:600;letter-spacing:-.01em}
+    .host{
+      margin:3px 0 0;
+      font-size:10.5px;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+      color:var(--muted);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      transition:color .15s;
+    }
+    .tile:hover .host{color:var(--accent-2)}
+
+    .foot-meta{
+      margin:26px 0 0;
+      padding-top:16px;
+      border-top:1px solid rgba(255,255,255,.06);
+      font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+    }
+
+    @media(max-width:560px){
+      body{font-size:15.5px;line-height:1.58}
+      .wrap{padding:74px 20px 40px}
+      .panel{padding:18px 17px;border-radius:11px}
+      .wordmark{font-size:26px;letter-spacing:.32em;text-indent:.32em;margin-bottom:14px}
+      .grid{gap:14px;margin-top:24px}
     }
   </style>
 </head>
@@ -246,17 +179,16 @@
     <main class="panel">
       <div class="wordmark">VNDRK</div>
 
-      <p class="eyebrow">Console</p>
-      <h1 class="panel-title">Dashboard</h1>
-      <p class="panel-sub">Working set — finance, fabrication, tenant administration, and infrastructure.</p>
-      <div class="rule"></div>
+      <p class="sec-label">Console</p>
+      <h1 class="sec">Dashboard</h1>
+      <p class="sec-intro">Working set — infrastructure, fabrication, tenant administration, and billing.</p>
 
       <section class="grid">
 
         <!-- Row 1 -->
         <a class="tile" href="http://192.168.50.161/Dashboard" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=unraid.net"
-            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227'%3E%3Crect x='3' y='4' width='18' height='4' rx='1'/%3E%3Crect x='3' y='10' width='18' height='4' rx='1' fill-opacity='0.75'/%3E%3Crect x='3' y='16' width='18' height='4' rx='1'/%3E%3C/svg%3E&quot;"></div>
+            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334d399'%3E%3Crect x='3' y='4' width='18' height='4' rx='1'/%3E%3Crect x='3' y='10' width='18' height='4' rx='1' fill-opacity='0.7'/%3E%3Crect x='3' y='16' width='18' height='4' rx='1'/%3E%3C/svg%3E&quot;"></div>
           <div class="label">
             <p class="name">UNRaid Server</p>
             <p class="host">192.168.50.161</p>
@@ -273,7 +205,7 @@
 
         <a class="tile" href="http://192.168.50.99/login" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=mainsail.xyz"
-            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227'%3E%3Cpath d='M12 2 4 18h8V2zm2 6v10h6L14 8zM2 20h20v2H2v-2z'/%3E%3C/svg%3E&quot;"></div>
+            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334d399'%3E%3Cpath d='M12 2 4 18h8V2zm2 6v10h6L14 8zM2 20h20v2H2v-2z'/%3E%3C/svg%3E&quot;"></div>
           <div class="label">
             <p class="name">Ender3v2</p>
             <p class="host">192.168.50.99</p>
@@ -308,7 +240,7 @@
         <!-- Row 3 -->
         <a class="tile" href="https://login.tailscale.com/start" target="_blank">
           <div class="icon"><img src="https://www.google.com/s2/favicons?sz=64&domain=tailscale.com"
-            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227'%3E%3Ccircle cx='5' cy='5' r='2.4'/%3E%3Ccircle cx='12' cy='5' r='2.4' fill-opacity='0.5'/%3E%3Ccircle cx='19' cy='5' r='2.4'/%3E%3Ccircle cx='5' cy='12' r='2.4' fill-opacity='0.5'/%3E%3Ccircle cx='12' cy='12' r='2.4'/%3E%3Ccircle cx='19' cy='12' r='2.4' fill-opacity='0.5'/%3E%3Ccircle cx='5' cy='19' r='2.4'/%3E%3Ccircle cx='12' cy='19' r='2.4' fill-opacity='0.5'/%3E%3Ccircle cx='19' cy='19' r='2.4'/%3E%3C/svg%3E&quot;"></div>
+            onerror="this.onerror=null;this.src=&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334d399'%3E%3Ccircle cx='5' cy='5' r='2.4'/%3E%3Ccircle cx='12' cy='5' r='2.4' fill-opacity='0.5'/%3E%3Ccircle cx='19' cy='5' r='2.4'/%3E%3Ccircle cx='5' cy='12' r='2.4' fill-opacity='0.5'/%3E%3Ccircle cx='12' cy='12' r='2.4'/%3E%3Ccircle cx='19' cy='12' r='2.4' fill-opacity='0.5'/%3E%3Ccircle cx='5' cy='19' r='2.4'/%3E%3Ccircle cx='12' cy='19' r='2.4' fill-opacity='0.5'/%3E%3Ccircle cx='19' cy='19' r='2.4'/%3E%3C/svg%3E&quot;"></div>
           <div class="label">
             <p class="name">Tailscale</p>
             <p class="host">login.tailscale.com</p>
@@ -327,12 +259,12 @@
           <div class="icon">
             <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <defs>
-                <linearGradient id="bubbleGold" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#e3bd4d"/>
-                  <stop offset="100%" stop-color="#a8831a"/>
+                <linearGradient id="bubbleAccent" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#34d399"/>
+                  <stop offset="100%" stop-color="#10b981"/>
                 </linearGradient>
               </defs>
-              <path fill="url(#bubbleGold)" d="M32 8C17.6 8 6 17.4 6 29c0 6.6 3.8 12.4 9.7 16.2-.6 4.1-2.4 7.6-5 10.2-.7.7-.2 1.9.8 1.8 6.3-.6 11.3-3 14.7-5.6 1.9.3 3.8.5 5.8.5 14.4 0 26-9.4 26-21S46.4 8 32 8z"/>
+              <path fill="url(#bubbleAccent)" d="M32 8C17.6 8 6 17.4 6 29c0 6.6 3.8 12.4 9.7 16.2-.6 4.1-2.4 7.6-5 10.2-.7.7-.2 1.9.8 1.8 6.3-.6 11.3-3 14.7-5.6 1.9.3 3.8.5 5.8.5 14.4 0 26-9.4 26-21S46.4 8 32 8z"/>
               <circle cx="22" cy="29" r="3.1" fill="#0a0c0d" opacity="0.92"/>
               <circle cx="32" cy="29" r="3.1" fill="#0a0c0d" opacity="0.92"/>
               <circle cx="42" cy="29" r="3.1" fill="#0a0c0d" opacity="0.92"/>
@@ -346,7 +278,7 @@
 
       </section>
 
-      <p class="foot">Walner Consulting, LLC</p>
+      <p class="foot-meta">Walner Consulting, LLC</p>
     </main>
   </div>
 </body>
