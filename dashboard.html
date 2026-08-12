@@ -34,15 +34,12 @@
       background-size:cover;
       background-position:center;
       background-repeat:no-repeat;
+      filter:grayscale(1);
     }
-    /* three-directional grey → silver → black gradient, layered over the wallpaper */
+    /* black → transparent wash over the wallpaper */
     body::after{
       content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
-      background:
-        radial-gradient(1300px 950px at 6% -8%,  rgba(146,157,163,.34), rgba(146,157,163,0) 60%),
-        radial-gradient(1150px 900px at 104% 24%, rgba(208,217,222,.30), rgba(208,217,222,0) 58%),
-        radial-gradient(1400px 1000px at 50% 118%, rgba(0,0,0,.85), rgba(0,0,0,0) 62%),
-        linear-gradient(205deg, rgba(43,49,52,.82) 0%, rgba(23,27,29,.86) 44%, rgba(7,9,10,.92) 100%);
+      background:linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 100%);
     }
 
     .wrap{
