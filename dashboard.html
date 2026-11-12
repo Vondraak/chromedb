@@ -1,6 +1,3 @@
-The file is ~58KB, and about 46KB of that is the two inlined `WCSans` base64 font blobs — pasting it into chat as copyable text isn't really workable.Here it is. One caveat up front: this is the file minus the two inlined `WCSans` `@font-face` blobs (46KB of base64 that would be unusable to copy by hand). The stack still *names* `'WCSans'` first, so it picks it up if the font's already available, and otherwise falls back to the system fonts the site lists next. The file card from my earlier message is the byte-exact version with the font embedded.
-
-```html
 <!doctype html>
 <html lang="en">
 <head>
